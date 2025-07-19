@@ -1,0 +1,75 @@
+-- Final Troll GUI with Custom Name & Labels
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "👀 Egg Esp & Randomizer 🥚" -- ✅ Visible GUI name
+
+-- GUI Frame (Top-right)
+local bgFrame = Instance.new("Frame", gui)
+bgFrame.Size = UDim2.new(0, 240, 0, 150)
+bgFrame.Position = UDim2.new(1, -250, 0, 10)
+bgFrame.BackgroundColor3 = Color3.fromHSV(0, 1, 1)
+bgFrame.BorderSizePixel = 0
+
+-- Frame outline
+local frameOutline = Instance.new("UIStroke", bgFrame)
+frameOutline.Thickness = 2
+frameOutline.Color = Color3.new(0, 0, 0)
+
+-- Rainbow background animation
+task.spawn(function()
+	while true do
+		for i = 0, 1, 0.01 do
+			bgFrame.BackgroundColor3 = Color3.fromHSV(i, 1, 1)
+			task.wait(0.02)
+		end
+	end
+end)
+
+-- Function to create outlined text labels
+local function createTextLabel(parent, text, size, position, bold)
+	local label = Instance.new("TextLabel", parent)
+	label.Size = size
+	label.Position = position
+	label.Text = text
+	label.TextScaled = true
+	label.Font = bold and Enum.Font.GothamBold or Enum.Font.Gotham
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.BackgroundTransparency = 1
+
+	local stroke = Instance.new("UIStroke", label)
+	stroke.Thickness = 1
+	stroke.Color = Color3.new(0, 0, 0)
+
+	return label
+end
+
+-- Title text
+createTextLabel(bgFrame, "👀 Egg Esp & Randomizer 🥚", UDim2.new(1, 0, 0, 30), UDim2.new(0, 0, 0, 0), true)
+
+-- Function to create troll buttons with outline
+local function createButton(text, posY)
+	local button = Instance.new("TextButton", bgFrame)
+	button.Size = UDim2.new(0.85, 0, 0, 30)
+	button.Position = UDim2.new(0.075, 0, 0, posY)
+	button.Text = text
+	button.TextScaled = true
+	button.Font = Enum.Font.Gotham
+	button.TextColor3 = Color3.new(1, 1, 1)
+	button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+	button.BorderSizePixel = 0
+
+	-- Outline for button
+	local stroke = Instance.new("UIStroke", button)
+	stroke.Thickness = 1
+	stroke.Color = Color3.new(0, 0, 0)
+
+	button.MouseButton1Click:Connect(function()
+		player:Kick("You have been permanently banned for exploiting.")
+	end)
+end
+
+-- Buttons
+createButton("👀 Egg Esp: Disabled", 45)
+createButton("🥚 Randomize🥚", 90)
